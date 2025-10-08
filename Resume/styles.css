@@ -1,0 +1,83 @@
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+.resume-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 10px; 
+  align-items: center; 
+  justify-content: center;
+}
+
+.row input {
+  padding: 8px;
+  font-size: 14px;
+}
+
+.row button {
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 2.5em;
+  margin-bottom: 5px;
+}
+
+header p {
+  font-size: 1em;
+  color: #555;
+}
+
+.section {
+  margin-bottom: 25px;
+}
+
+.section h2 {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.experience-item {
+  margin-bottom: 15px;
+}
+
+.experience-item h3 {
+  color: #007bff;
+}
