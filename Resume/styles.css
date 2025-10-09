@@ -11,15 +11,32 @@ li {
 }
 
 body {
+  font-size: small;
   background-color: #f4f4f9;
   color: #333;
-  line-height: 1.6;
+  line-height: 1.2;
+}
+
+header,
+.row {
+  display: inline-block;
+}
+
+.resume-container > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.rw-login {
+  flex-direction: column;
+  font: size 0.8em;
 }
 
 .resume-container {
   max-width: 800px;
-  margin: 20px auto;
-  padding: 30px;
+  margin: 15px auto;
+  padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -48,23 +65,21 @@ header {
 }
 
 header h1 {
-  font-size: 2.5em;
   margin-bottom: 5px;
 }
 
 header p {
-  font-size: 1em;
   color: #555;
 }
 
 .section {
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .section h2 {
   background-color: #007bff;
   color: #fff;
-  padding: 10px;
+  padding: 5px;
   border-radius: 5px;
   margin-bottom: 10px;
 }
@@ -85,4 +100,33 @@ ul {
 .li-completed {
   color: green;
   text-decoration: line-through;
+}
+
+.li-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.li-row > div:first-child {
+  flex: 1;
+}
+.li-row button {
+  margin-left: 5px;
+}
+
+.collapsible-content {
+  display: none;
+  margin-top: 5px;
+}
+
+.collapsible-content.hidden {
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.collapsible {
+  cursor: pointer;
 }

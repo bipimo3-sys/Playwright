@@ -16,6 +16,7 @@ function login() {
 
 function addTask(task, tasklist) {
   let text = task.value.trim();
+  if (text === "") return;
   const li = document.createElement("li");
   li.id = "task-" + Math.random().toString(36).slice(2, 11);
   li.innerHTML = `<div class="li-row"><div>${text}</div> <button onclick="deleteThis(this.closest('li'))">Delete</button>
@@ -37,4 +38,17 @@ taskInput.addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
     addTask(taskInput, document.getElementById("tasklist"));
   }
+});
+
+const collapsibleHeaders = document.querySelectorAll(
+  ".section .collapsible"
+);
+
+collapsibleHeaders.forEach((header) => {
+  header.addEventListener("click", () => {
+    const content = header.nextElementSibling;
+    if (content) {
+      content.classList.toggle("hidden");
+    }
+  });
 });
