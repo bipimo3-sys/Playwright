@@ -99,6 +99,8 @@ ul {
 
 .li-completed {
   color: green;
+}
+.li-completed > .li-row > div:first-child {
   text-decoration: line-through;
 }
 
