@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "gitpush": "git add . && git commit -m \"committed\" && git push origin main"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
