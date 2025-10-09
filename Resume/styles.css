@@ -27,8 +27,8 @@ body {
 
 .row {
   display: flex;
-  gap: 10px; 
-  align-items: center; 
+  gap: 10px;
+  align-items: center;
   justify-content: center;
 }
 
@@ -80,4 +80,9 @@ ul {
 
 .experience-item h3 {
   color: #007bff;
+}
+
+.li-completed {
+  color: green;
+  text-decoration: line-through;
 }
