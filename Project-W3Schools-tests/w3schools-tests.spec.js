@@ -2,7 +2,7 @@ require("dotenv").config({ quiet: true });
 import { test, expect } from "@playwright/test";
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 
-test.only("login", async ({ page }, testInfo) => {
+test("login", async ({ page }, testInfo) => {
   try {
     await page.goto("https://www.w3schools.com");
     await page.waitForLoadState("networkidle");
