@@ -35,6 +35,8 @@ test.only("login", async ({ page }, testInfo) => {
 
     //await page.keyboard.press("Escape");
     //await page.pause(); //will only work on headed mode
+    await popup.waitForLoadState("networkidle");
+    await popup.waitForSelector('section[role="dialog"] button[aria-label="Close"]');
 
     const modalCloseBtn = page.locator('section[role="dialog"] button[aria-label="Close"]');
 
@@ -42,6 +44,7 @@ test.only("login", async ({ page }, testInfo) => {
       // wait max 3s
       await modalCloseBtn.click();
     }
+    //await popup.waitForSelector("p", { hasText: "Bipi Moh" });
     const userTxt = await page.locator("p", { hasText: "Bipi Moh" }); //only expect creates screenshots on failure
 
     await expect(userTxt).toBeVisible({ timeout: 10000 });
