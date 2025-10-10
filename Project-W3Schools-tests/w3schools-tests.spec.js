@@ -12,6 +12,7 @@ test("login", async ({ page }, testInfo) => {
     const dropdown = page.locator("#tnb-login-dropdown-loginForm").first();
     await expect(dropdown).toBeVisible({ timeout: 500 });
     
+    /* //google login not possible on github, asks for verification code
     const [popup] = await Promise.all([
       page.waitForEvent("popup"), // wait for the new window
       page.locator(".social-button.google").click(), // click that opens it
@@ -27,6 +28,13 @@ test("login", async ({ page }, testInfo) => {
     await popup.waitForSelector("input[type='password']");
     await popup.locator("input[type='password']").fill(password);
     await popup.locator("button:has-text('Next')").click();
+    */
+
+    const email = process.env.W3S_LOGINEMAIL;
+    const password = process.env.W3S_PASSWORD;
+    await page.locator("input[type='email']").fill(email);
+    await page.locator("input[type='password']").fill(password);
+    await page.locator("button:has-text('Sign In')").click();
 
     await expect(page).toHaveURL("https://pathfinder.w3schools.com/", { timeout: 40000 });
 
@@ -45,7 +53,7 @@ test("login", async ({ page }, testInfo) => {
     await expect(userTxt).toBeVisible({ timeout: 10000 }); 
   } catch (err) {
     // Take a screenshot safely, if page is still open
-    console.log("error=========>", err);
+    //console.log("error=========>", err);
 
     if (!page.isClosed()) {
       await testInfo.attach(`screenshot-${timestamp}`, {
