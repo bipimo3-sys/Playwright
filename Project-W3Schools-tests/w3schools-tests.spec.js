@@ -11,7 +11,7 @@ test("login", async ({ page }, testInfo) => {
 
     const dropdown = page.locator("#tnb-login-dropdown-loginForm").first();
     await expect(dropdown).toBeVisible({ timeout: 500 });
-    /* 
+    
     const [popup] = await Promise.all([
       page.waitForEvent("popup"), // wait for the new window
       page.locator(".social-button.google").click(), // click that opens it
@@ -42,7 +42,7 @@ test("login", async ({ page }, testInfo) => {
     //const userTxt = await page.locator("p", { hasText: "Bipi Moh" }); //only expect creates screenshots on failure
     const userTxt = await page.locator("p", { hasText: "Bipi Mo" }); //only expect creates screenshots on failure
 
-    await expect(userTxt).toBeVisible({ timeout: 10000 }); */
+    await expect(userTxt).toBeVisible({ timeout: 10000 }); 
   } catch (err) {
     // Take a screenshot safely, if page is still open
     console.log("error=========>", err);
