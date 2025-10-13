@@ -10,14 +10,14 @@ test("iframe", async ({ page }, testInfo) => {
     //await page.waitForLoadState("networkidle");
 
     const htmlInput = `<p><b><i>Hello world!</i></b></p>`;
-    await page.waitForSelector("#textareaCode");
+    //await page.waitForSelector("#textareaCode");
     const textarea = page.locator("#textareaCode");
     await textarea.fill(htmlInput);
 
-    await page.waitForSelector("#runbtn");
+    //await page.waitForSelector("#runbtn");
     await page.locator("#runbtn").click();
 
-    await page.waitForSelector("#iframeResult");
+    //await page.waitForSelector("#iframeResult");
     const frame = page.frameLocator("#iframeResult");
     await expect(frame.locator("body")).toContainText("Hello world!");
 
