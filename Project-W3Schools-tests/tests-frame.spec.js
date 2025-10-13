@@ -48,8 +48,20 @@ async function iframeTest(page, testInfo) {
 for (const browserType of [chromium, firefox, webkit]) {
   test(`iframe test in ${browserType.name()}`, async ({}, testInfo) => {
     const browser = await browserType.launch();
-    const page = await browser.newPage();
+    const normalContext = await browser.newContext({
+      viewport: { width: 1024, height: 768 },
+      userAgent: "Custom-Desktop-User-Agent",
+    });
 
+    let page = await normalContext.newPage();
+    await iframeTest(page, testInfo); // pass testInfo explicitly
+
+    const mobileContext = await browser.newContext({
+      viewport: { width: 375, height: 667 },
+      userAgent: "Custom-Mobile-User-Agent",
+    });
+
+    page = await mobileContext.newPage();
     await iframeTest(page, testInfo); // pass testInfo explicitly
 
     await browser.close();
