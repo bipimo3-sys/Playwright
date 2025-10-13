@@ -1,5 +1,5 @@
 require("dotenv").config({ quiet: true });
-import { test, expect } from "@playwright/test";
+import { test, expect, chromium, firefox, webkit } from "@playwright/test";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 
-test("iframe", async ({ page }, testInfo) => {
+async function iframeTest(page, testInfo) {
   try {
     const filePath = path.join(__dirname, "../App01/iframe.html");
 
@@ -43,4 +43,15 @@ test("iframe", async ({ page }, testInfo) => {
     }
     throw err; // rethrow so the test fails
   }
-});
+}
+
+for (const browserType of [chromium, firefox, webkit]) {
+  test(`iframe test in ${browserType.name()}`, async ({}, testInfo) => {
+    const browser = await browserType.launch();
+    const page = await browser.newPage();
+
+    await iframeTest(page, testInfo); // pass testInfo explicitly
+
+    await browser.close();
+  });
+}
