@@ -2,7 +2,14 @@ import dotenv from "dotenv";
 dotenv.config({ quiet: true });
 import path from "path";
 import { fileURLToPath } from "url";
-import { test, expect, chromium, firefox, webkit } from "@playwright/test";
+import {
+  test,
+  expect,
+  chromium,
+  firefox,
+  webkit,
+  devices,
+} from "@playwright/test";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -67,3 +74,13 @@ for (const browserType of [chromium, firefox, webkit]) {
     await browser.close();
   });
 }
+
+const Pixel = devices["Pixel 5"];
+
+test.use({
+  ...Pixel,
+});
+
+test("iframe test in pixel", async ({ page }, testInfo) => {
+  await iframeTest(page, testInfo);
+});
