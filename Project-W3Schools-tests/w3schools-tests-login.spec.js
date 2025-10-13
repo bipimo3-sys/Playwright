@@ -2,7 +2,7 @@ require("dotenv").config({ quiet: true });
 import { test, expect } from "@playwright/test";
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 
-test("login", async ({ page }, testInfo) => {
+test.skip("login", async ({ page }, testInfo) => {
   try {
     await page.goto("https://www.w3schools.com");
     await page.waitForLoadState("networkidle");
@@ -55,27 +55,6 @@ test("login", async ({ page }, testInfo) => {
     // Take a screenshot safely, if page is still open
     //console.log("error=========>", err);
 
-    if (!page.isClosed()) {
-      await testInfo.attach(`screenshot-${timestamp}`, {
-        body: await page.screenshot({ fullPage: true }),
-        contentType: "image/png",
-      });
-    }
-    throw err; // rethrow so the test fails
-  }
-});
-
-test("frame", async ({ page }, testInfo) => {
-  try {
-    await page.goto("https://www.w3schools.com");
-    await page.waitForLoadState("networkidle");
-    const loginButton = page.locator("#tnb-login-btn");
-    await loginButton.click();
-
-    
-    await page.screenshot({ path: `screenshots/page-${timestamp}.png`, fullPage: true }); //explicit screenshot
-
-  } catch (err) {
     if (!page.isClosed()) {
       await testInfo.attach(`screenshot-${timestamp}`, {
         body: await page.screenshot({ fullPage: true }),

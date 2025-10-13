@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gitpush": "git add . && git commit -m \"committed\" && git push origin main"
+    "gitpush": "git add . && git commit -m \"committed\" && git push origin main",
+    "postinstall": "npx playwright install --with-deps"
   },
   "keywords": [],
   "author": "",
