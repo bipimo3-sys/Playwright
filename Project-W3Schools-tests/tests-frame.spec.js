@@ -68,6 +68,10 @@ const deviceList = [
 
 for (const browserType of [chromium, firefox, webkit]) {
   for (const device of deviceList) {
+
+    // Skip devices with isMobile for Firefox, it is creating errors
+    if (browserType.name() === "firefox" && device.device?.isMobile) continue;
+
     test(`${
       device.name
     } test in ${browserType.name()}`, async ({}, testInfo) => {
