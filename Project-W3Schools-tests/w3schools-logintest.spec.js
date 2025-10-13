@@ -1,4 +1,5 @@
-require("dotenv").config({ quiet: true });
+import dotenv from "dotenv";
+dotenv.config({ quiet: true });
 import { test, expect } from "@playwright/test";
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 
@@ -11,7 +12,7 @@ test.skip("login", async ({ page }, testInfo) => {
 
     const dropdown = page.locator("#tnb-login-dropdown-loginForm").first();
     await expect(dropdown).toBeVisible({ timeout: 500 });
-    
+
     /* //google login not possible on github, asks for verification code
     const [popup] = await Promise.all([
       page.waitForEvent("popup"), // wait for the new window
@@ -36,21 +37,30 @@ test.skip("login", async ({ page }, testInfo) => {
     await page.locator("input[type='password']").fill(password);
     await page.locator("button:has-text('Sign In')").click();
 
-    await expect(page).toHaveURL("https://pathfinder.w3schools.com/", { timeout: 40000 });
+    await expect(page).toHaveURL("https://pathfinder.w3schools.com/", {
+      timeout: 40000,
+    });
 
-    await page.waitForSelector('section[role="dialog"] button[aria-label="Close"]');
+    await page.waitForSelector(
+      'section[role="dialog"] button[aria-label="Close"]'
+    );
 
-    const modalCloseBtn = page.locator('section[role="dialog"] button[aria-label="Close"]');
+    const modalCloseBtn = page.locator(
+      'section[role="dialog"] button[aria-label="Close"]'
+    );
 
     if (await modalCloseBtn.isVisible({ timeout: 3000 })) {
       // wait max 3s
       await modalCloseBtn.click();
     }
-    await page.screenshot({ path: `screenshots/page-${timestamp}.png`, fullPage: true }); //explicit screenshot
+    await page.screenshot({
+      path: `screenshots/page-${timestamp}.png`,
+      fullPage: true,
+    }); //explicit screenshot
     //const userTxt = await page.locator("p", { hasText: "Bipi Moh" }); //only expect creates screenshots on failure
     const userTxt = await page.locator("p", { hasText: "Bipi Mo" }); //only expect creates screenshots on failure
 
-    await expect(userTxt).toBeVisible({ timeout: 10000 }); 
+    await expect(userTxt).toBeVisible({ timeout: 10000 });
   } catch (err) {
     // Take a screenshot safely, if page is still open
     //console.log("error=========>", err);

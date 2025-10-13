@@ -1,6 +1,8 @@
-require("dotenv").config({ quiet: true });
-import { test, expect, chromium, firefox, webkit } from "@playwright/test";
+import dotenv from "dotenv";
+dotenv.config({ quiet: true });
+import path from "path";
 import { fileURLToPath } from "url";
+import { test, expect, chromium, firefox, webkit } from "@playwright/test";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,10 +25,8 @@ async function iframeTest(page, testInfo) {
     }); //explicit screenshot
 
     await textarea.fill(htmlInput);
-
     await page.locator("#runbtn").click();
 
-    //await page.waitForSelector("#iframeResult");
     const frame = page.frameLocator("#iframeResult");
     await expect(frame.locator("body")).toContainText("Hello world!");
 
