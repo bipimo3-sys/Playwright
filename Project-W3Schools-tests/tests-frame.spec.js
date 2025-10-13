@@ -1,20 +1,29 @@
 require("dotenv").config({ quiet: true });
 import { test, expect } from "@playwright/test";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 
 test("iframe", async ({ page }, testInfo) => {
   try {
-    await page.goto(
-      "https://www.w3schools.com/html/tryit.asp?filename=tryhtml_default"
-    );
-    //await page.waitForLoadState("networkidle");
+    const filePath = path.join(__dirname, "../App01/iframe.html");
+
+    await page.goto(`file://${filePath}`);
 
     const htmlInput = `<p><b><i>Hello world!</i></b></p>`;
-    //await page.waitForSelector("#textareaCode");
+    await page.waitForSelector("#textareaCode");
     const textarea = page.locator("#textareaCode");
+    await expect(textarea).toHaveValue("<p>Hello Playwright!</p>");
+    await page.screenshot({
+      path: `screenshots/page-${timestamp}.png`,
+      fullPage: true,
+    }); //explicit screenshot
+
     await textarea.fill(htmlInput);
 
-    //await page.waitForSelector("#runbtn");
     await page.locator("#runbtn").click();
 
     //await page.waitForSelector("#iframeResult");
@@ -26,7 +35,6 @@ test("iframe", async ({ page }, testInfo) => {
       fullPage: true,
     }); //explicit screenshot
   } catch (err) {
-
     if (!page.isClosed()) {
       await testInfo.attach(`screenshot-${timestamp}`, {
         body: await page.screenshot({ fullPage: true }),
