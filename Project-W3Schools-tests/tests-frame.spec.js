@@ -52,35 +52,41 @@ async function iframeTest(page, testInfo) {
   }
 }
 
+const deviceList = [
+  {
+    name: "Desktop",
+    viewport: { width: 1024, height: 768 },
+    userAgent: "Custom-Desktop",
+  },
+  {
+    name: "Mobile",
+    viewport: { width: 375, height: 667 },
+    userAgent: "Custom-Mobile",
+  },
+  { name: "Pixel 5", device: devices["Pixel 5"] },
+];
+
 for (const browserType of [chromium, firefox, webkit]) {
-  test(`iframe test in ${browserType.name()}`, async ({}, testInfo) => {
-    const browser = await browserType.launch();
-    const normalContext = await browser.newContext({
-      viewport: { width: 1024, height: 768 },
-      userAgent: "Custom-Desktop-User-Agent",
+  for (const device of deviceList) {
+    test(`${
+      device.name
+    } test in ${browserType.name()}`, async ({}, testInfo) => {
+      const browser = await browserType.launch();
+
+      // If using a device preset like Pixel 5
+      const context = device.device
+        ? await browser.newContext(device.device)
+        : await browser.newContext({
+            viewport: device.viewport,
+            userAgent: device.userAgent,
+          });
+
+      const page = await context.newPage();
+
+      // Run your reusable iframe test
+      await iframeTest(page, testInfo);
+
+      await browser.close();
     });
-
-    let page = await normalContext.newPage();
-    await iframeTest(page, testInfo);
-
-    const mobileContext = await browser.newContext({
-      viewport: { width: 375, height: 667 },
-      userAgent: "Custom-Mobile-User-Agent",
-    });
-
-    page = await mobileContext.newPage();
-    await iframeTest(page, testInfo);
-
-    await browser.close();
-  });
+  }
 }
-
-const Pixel = devices["Pixel 5"];
-
-test.use({
-  ...Pixel,
-});
-
-test("iframe test in pixel", async ({ page }, testInfo) => {
-  await iframeTest(page, testInfo);
-});
