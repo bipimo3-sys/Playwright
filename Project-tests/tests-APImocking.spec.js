@@ -1,9 +1,24 @@
 import { test, expect } from "@playwright/test";
+const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 
 test.describe("Iframe2 API Mock Test", () => {
-  test("should load mock API data and populate iframe", async ({ page }, testInfo) => {
+  test("should load mock API data and populate iframe", async ({
+    page,
+  }, testInfo) => {
     // Go to your locally served HTML page
     await page.goto("http://localhost:3000/App01/iframe2ApiMock.html");
+
+    // Wait for textarea to be populated after the fetch
+    const textarea = page.locator("#textareaCode");
+    await expect(textarea).toHaveValue(/Mock User/, { timeout: 5000 });
+
+    await page.screenshot({
+      path: `screenshots/page-iframeAPImock1${timestamp}.png`,
+      fullPage: true,
+    }); //explicit screenshot
+
+    await page.reload();
+    await page.waitForSelector("#textareaCode");
 
     // Intercept /api/users and return mock response
     await page.route("**/api/users", async (route) => {
@@ -20,14 +35,8 @@ test.describe("Iframe2 API Mock Test", () => {
       });
     });
 
-    // Wait for textarea to be populated after the fetch
-    const textarea = page.locator("#textareaCode");
-    await expect(textarea).toHaveValue(/Mock User/, { timeout: 5000 });
-
-    await page.screenshot({
-      path: `screenshots/page-${timestamp}.png`,
-      fullPage: true,
-    }); //explicit screenshot
+    // Go to your locally served HTML page
+    await page.goto("http://localhost:3000/App01/iframe2ApiMock.html");
 
     // Click the PopulateIframe button
     const runButton = page.locator("#populateBtn");
@@ -38,7 +47,7 @@ test.describe("Iframe2 API Mock Test", () => {
     await expect(frame.locator("body")).toContainText("Test User");
 
     await page.screenshot({
-      path: `screenshots/page-${timestamp}.png`,
+      path: `screenshots/page-iframeAPImock2${timestamp}.png`,
       fullPage: true,
     }); //explicit screenshot
 

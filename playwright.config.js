@@ -13,7 +13,7 @@ import { defineConfig, devices } from "@playwright/test";
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  testDir: "./Project-W3Schools-tests",
+  testDir: "./Project-tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -78,7 +78,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: "npm run start-server", // The script to start your server
-    url: "http://localhost:3000", // Change if your API runs on a different port
+    url: "http://localhost:3000/App01", // Change if your API runs on a different port
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000, // Wait up to 2 minutes for the server to be ready
   },
