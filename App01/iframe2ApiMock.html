@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Iframe API Populate Test</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      textarea {
+        width: 100%;
+        height: 150px;
+      }
+      button {
+        margin-top: 10px;
+        padding: 5px 10px;
+      }
+      iframe {
+        width: 100%;
+        height: 200px;
+        margin-top: 20px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>API Data Loader</h2>
+    <textarea id="textareaCode" readonly>Loading data...</textarea><br />
+    <button id="populateBtn">PopulateIframe</button>
+    <iframe id="iframeResult"></iframe>
+
+    <script>
+      const textarea = document.getElementById("textareaCode");
+      const iframe = document.getElementById("iframeResult");
+      const populateBtn = document.getElementById("populateBtn");
+
+      // Fetch mock data from local API server
+      async function loadApiData() {
+        try {
+          const response = await fetch("http://localhost:3000/api/users");
+          const data = await response.json();
+
+          const htmlContent = `<ul>${data.users
+            .map((user) => `<li>${user.name}</li>`)
+            .join("")}</ul>`;
+
+          textarea.value = htmlContent;
+        } catch (err) {
+          textarea.value = "Failed to load data: " + err.message;
+        }
+      }
+
+      // On button click, populate iframe with textarea content
+      populateBtn.addEventListener("click", () => {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        doc.open();
+        doc.write(textarea.value);
+        doc.close();
+      });
+
+      // Load data on page load
+      window.addEventListener("DOMContentLoaded", loadApiData);
+    </script>
+  </body>
+</html>
