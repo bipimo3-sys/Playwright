@@ -54,7 +54,7 @@ for (const browserType of [chromium, firefox, webkit]) {
     });
 
     let page = await normalContext.newPage();
-    await iframeTest(page, testInfo); // pass testInfo explicitly
+    await iframeTest(page, testInfo);
 
     const mobileContext = await browser.newContext({
       viewport: { width: 375, height: 667 },
@@ -62,7 +62,7 @@ for (const browserType of [chromium, firefox, webkit]) {
     });
 
     page = await mobileContext.newPage();
-    await iframeTest(page, testInfo); // pass testInfo explicitly
+    await iframeTest(page, testInfo);
 
     await browser.close();
   });
