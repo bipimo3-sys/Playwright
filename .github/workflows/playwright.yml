@@ -24,6 +24,8 @@ jobs:
           GOOGLE_PASSWORD: ${{ secrets.GOOGLE_PASSWORD }}
           W3S_LOGINEMAIL: ${{ secrets.W3S_LOGINEMAIL }}
           W3S_PASSWORD: ${{ secrets.W3S_PASSWORD }}
+          TS1_USERNAME: ${{ secrets.TS1_USERNAME }}
+          TS1_PASSWORD: ${{ secrets.TS1_PASSWORD }}
       run: npx playwright test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}

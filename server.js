@@ -9,7 +9,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Serve static files from App01
-app.use('/App01', express.static(path.join(__dirname, 'App01')));
+//app.use('/App01', express.static(path.join(__dirname, 'App01')));
+app.use('/ProjectTSApp', express.static(path.join(__dirname, 'ProjectTSApp')));
 
 // API endpoint to return JSON
 app.get('/api/users', (req, res) => {
