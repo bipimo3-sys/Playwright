@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add To List Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    ul {
+      margin-top: 20px;
+      padding-left: 20px;
+      text-align: left;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    #message {
+      margin-top: 15px;
+      color: red;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Add To List</h2>
+    <input type="text" id="itemInput" placeholder="Enter an item">
+    <button id="addBtn">Add to List</button>
+    <p id="message"></p>
+    <ul id="itemList"></ul>
+  </div>
+
+  <script>
+    const input = document.getElementById('itemInput');
+    const button = document.getElementById('addBtn');
+    const list = document.getElementById('itemList');
+    const message = document.getElementById('message');
+
+    button.addEventListener('click', () => {
+      const value = input.value.trim();
+      if (!value) {
+        message.textContent = 'Please enter a value.';
+        message.style.display = 'block';
+        return;
+      }
+      message.style.display = 'none';
+
+      const li = document.createElement('li');
+      li.textContent = value;
+      list.appendChild(li);
+
+      input.value = '';
+      input.focus();
+    });
+  </script>
+</body>
+</html>

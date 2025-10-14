@@ -2,14 +2,17 @@ import dotenv from "dotenv";
 dotenv.config({ quiet: true });
 import { test, expect } from "@playwright/test";
 
-test.describe.parallel("Login Page Parallel Tests", () => {
-  test("login-page-1load", async ({ page }, testInfo) => {
+test.describe.parallel("Landing Page Parallel Tests", () => {
+  test("landing-page-1VerifyPageTitle", async ({ page }, testInfo) => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     try {
-      await page.goto("http://localhost:3000/ProjectTSApp/TS1_Login.html");
+      await page.goto("http://localhost:3000/ProjectTSApp/index.html");
       await page.waitForLoadState("networkidle");
+
       const title = await page.title();
-      await expect(title).toBe("Login Page");
+
+      expect(title).toBe("Resume - Bipi");
+
       await page.screenshot({
         path: `screenshots/TS1-${testInfo.title}-${timestamp}.png`,
         fullPage: true,
@@ -25,15 +28,27 @@ test.describe.parallel("Login Page Parallel Tests", () => {
     }
   });
 
-  test("login-page-2unameAndPassVisible", async ({ page }, testInfo) => {
+  test("landing-page-2VerifyHeaderSectionContent", async ({
+    page,
+  }, testInfo) => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     try {
-      await page.goto("http://localhost:3000/ProjectTSApp/TS1_Login.html");
+      await page.goto("http://localhost:3000/ProjectTSApp/index.html");
       await page.waitForLoadState("networkidle");
-      const usernameField = page.locator("#username");
-      const passwordField = page.locator("#password");
-      await expect(usernameField).toBeVisible();
-      await expect(passwordField).toBeVisible();
+
+      // Verify the main heading (name)
+      const nameHeader = await page.locator("header h1");
+      await expect(nameHeader).toHaveText("Bipi");
+
+      const contactInfo = await page.locator("header p");
+      const contactText = await contactInfo.textContent();
+
+      const expectedContact =
+        "Email: bipi@example.com | Phone: +91 1234567890 | Location: Kerala, India";
+
+      const normalizedText = contactText.replace(/\s+/g, " ").trim();
+      expect(normalizedText).toBe(expectedContact);
+
       await page.screenshot({
         path: `screenshots/TS1-${testInfo.title}-${timestamp}.png`,
         fullPage: true,
@@ -49,40 +64,26 @@ test.describe.parallel("Login Page Parallel Tests", () => {
     }
   });
 
-  test("login-page-3loginBtnVisible", async ({ page }, testInfo) => {
+  test("landing-page-3VerifyProfileSectionVisibilityAndContent", async ({
+    page,
+  }, testInfo) => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     try {
-      await page.goto("http://localhost:3000/ProjectTSApp/TS1_Login.html");
+      await page.goto("http://localhost:3000/ProjectTSApp/index.html");
       await page.waitForLoadState("networkidle");
-      const loginButton = page.locator("#loginBtn");
-      await expect(loginButton).toBeVisible();
-      await expect(loginButton).toBeEnabled();
-      await page.screenshot({
-        path: `screenshots/TS1-${testInfo.title}-${timestamp}.png`,
-        fullPage: true,
-      }); //explicit screenshot
-    } catch (err) {
-      if (!page.isClosed()) {
-        await testInfo.attach(`TS1-${testInfo.title}-${timestamp}`, {
-          body: await page.screenshot({ fullPage: true }),
-          contentType: "image/png",
-        });
-      }
-      throw err; // rethrow so the test fails
-    }
-  });
 
-  test("login-page-4loginWithoutInputs", async ({ page }, testInfo) => {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-    try {
-      await page.goto("http://localhost:3000/ProjectTSApp/TS1_Login.html");
-      await page.waitForLoadState("networkidle");
-      const loginButton = page.locator("#loginBtn");
-      await loginButton.click();
-      const message = page.locator("#message");
-      await expect(message).toBeVisible();
-      await expect(message).toHaveText(
-        "Please enter both username and password."
+      const profileHeading = page.locator("section h2.collapsible", {
+        hasText: "Profile",
+      });
+      await expect(profileHeading).toBeVisible();
+
+      const profileContent = page.locator(
+        "section:has(h2:has-text('Profile')) .collapsible-content"
+      );
+
+      const contentText = await profileContent.textContent();
+      expect(contentText.replace(/\s+/g, " ").trim()).toContain(
+        "A IBM Domino/Lotus Notes developer with ~20 years of experience in full stack development."
       );
 
       await page.screenshot({
@@ -100,22 +101,35 @@ test.describe.parallel("Login Page Parallel Tests", () => {
     }
   });
 
-  test("login-page-5loginWithoutUname", async ({ page }, testInfo) => {
+  test("landing-page-4VerifySkillsSectionContainsListItems", async ({
+    page,
+  }, testInfo) => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     try {
-      await page.goto("http://localhost:3000/ProjectTSApp/TS1_Login.html");
+      await page.goto("http://localhost:3000/ProjectTSApp/index.html");
       await page.waitForLoadState("networkidle");
 
-      const pass = process.env.TS1_PASSWORD;
-      await page.fill("#password", pass);
+      const skillsHeading = page.locator("section h2.collapsible", {
+        hasText: "Skills",
+      });
+      await expect(skillsHeading).toBeVisible();
 
-      const loginButton = page.locator("#loginBtn");
-      await loginButton.click();
-      const message = page.locator("#message");
-      await expect(message).toBeVisible();
-      await expect(message).toHaveText(
-        "Please enter both username and password."
+      const skillsList = page.locator(
+        "section:has(h2:has-text('Skills')) ul li"
       );
+      const skillsCount = await skillsList.count();
+      expect(skillsCount).toBe(3);
+
+      const expectedSkills = [
+        "IBM Domino/Notes",
+        "Lotus Formulae, Lotus Script, Xpages",
+        "HTML, CSS, JavaScript",
+      ];
+
+      for (let i = 0; i < skillsCount; i++) {
+        const skillText = (await skillsList.nth(i).textContent()).trim();
+        expect(skillText).toBe(expectedSkills[i]);
+      }
 
       await page.screenshot({
         path: `screenshots/TS1-${testInfo.title}-${timestamp}.png`,
@@ -132,21 +146,23 @@ test.describe.parallel("Login Page Parallel Tests", () => {
     }
   });
 
-  test("login-page-6loginWithoutPass", async ({ page }, testInfo) => {
+  test("landing-page-5VerifyHiddenSectionsExperienceAndEducation", async ({
+    page,
+  }, testInfo) => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     try {
-      await page.goto("http://localhost:3000/ProjectTSApp/TS1_Login.html");
+      await page.goto("http://localhost:3000/ProjectTSApp/index.html");
       await page.waitForLoadState("networkidle");
-      const uname = process.env.TS1_USERNAME;
-      await page.fill("#username", uname);
 
-      const loginButton = page.locator("#loginBtn");
-      await loginButton.click();
-      const message = page.locator("#message");
-      await expect(message).toBeVisible();
-      await expect(message).toHaveText(
-        "Please enter both username and password."
+      const experienceSection = page.locator(
+        "section:has(h2:has-text('Experience'))"
       );
+      await expect(experienceSection).toHaveCSS("display", "none");
+
+      const educationSection = page.locator(
+        "section:has(h2:has-text('Education'))"
+      );
+      await expect(educationSection).toHaveCSS("display", "none");
 
       await page.screenshot({
         path: `screenshots/TS1-${testInfo.title}-${timestamp}.png`,
@@ -163,19 +179,18 @@ test.describe.parallel("Login Page Parallel Tests", () => {
     }
   });
 
-  test("login-page-7wrongUnamePass", async ({ page }, testInfo) => {
+  test("landing-page-6VerifyProjectsSectionExists", async ({
+    page,
+  }, testInfo) => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     try {
-      await page.goto("http://localhost:3000/ProjectTSApp/TS1_Login.html");
+      await page.goto("http://localhost:3000/ProjectTSApp/index.html");
       await page.waitForLoadState("networkidle");
-      await page.fill("#username", "asdad");
-      await page.fill("#password", "asdasf");
 
-      const loginButton = page.locator("#loginBtn");
-      await loginButton.click();
-      const message = page.locator("#message");
-      await expect(message).toBeVisible();
-      await expect(message).toHaveText("Invalid credentials.");
+      const projectsSection = page.locator(
+        "section:has(h2:has-text('Projects'))"
+      );
+      await expect(projectsSection).toBeVisible();
 
       await page.screenshot({
         path: `screenshots/TS1-${testInfo.title}-${timestamp}.png`,
@@ -192,21 +207,25 @@ test.describe.parallel("Login Page Parallel Tests", () => {
     }
   });
 
-  test("login-page-8correctUnamePass", async ({ page }, testInfo) => {
+  test("landing-page-7VerifyProjectListItems", async ({ page }, testInfo) => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     try {
-      await page.goto("http://localhost:3000/ProjectTSApp/TS1_Login.html");
+      await page.goto("http://localhost:3000/ProjectTSApp/index.html");
       await page.waitForLoadState("networkidle");
-      const uname = process.env.TS1_USERNAME;
-      const pass = process.env.TS1_PASSWORD;
-      await page.fill("#username", uname);
-      await page.fill("#password", pass);
 
-      const loginButton = page.locator("#loginBtn");
-      await loginButton.click();
-      const message = page.locator("#message");
-      await expect(message).toBeVisible();
-      await expect(message).toHaveText("Login successful!");
+      const projectItems = page.locator("#tasklist li");
+      const count = await projectItems.count();
+      expect(count).toBe(2);
+
+      const expectedTexts = [
+        "Domino App 1 – Business workflow app.",
+        "Domino App 2 – Business workflow app.",
+      ];
+
+      for (let i = 0; i < count; i++) {
+        const text = await projectItems.nth(i).innerText();
+        expect(text).toContain(expectedTexts[i]);
+      }
 
       await page.screenshot({
         path: `screenshots/TS1-${testInfo.title}-${timestamp}.png`,
@@ -223,21 +242,15 @@ test.describe.parallel("Login Page Parallel Tests", () => {
     }
   });
 
-  test("login-page-9unameCaseSensitivity", async ({ page }, testInfo) => {
+  test("landing-page-8VerifyExternalCSSLink", async ({ page }, testInfo) => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     try {
-      await page.goto("http://localhost:3000/ProjectTSApp/TS1_Login.html");
+      await page.goto("http://localhost:3000/ProjectTSApp/index.html");
       await page.waitForLoadState("networkidle");
-      const uname = process.env.TS1_USERNAME;
-      const pass = process.env.TS1_PASSWORD;
-      await page.fill("#username", uname.toUpperCase());
-      await page.fill("#password", pass);
 
-      const loginButton = page.locator("#loginBtn");
-      await loginButton.click();
-      const message = page.locator("#message");
-      await expect(message).toBeVisible();
-      await expect(message).toHaveText("Invalid credentials.");
+      const cssLink = page.locator("link[rel='stylesheet']");
+      const href = await cssLink.getAttribute("href");
+      expect(href).toBe("styles.css");
 
       await page.screenshot({
         path: `screenshots/TS1-${testInfo.title}-${timestamp}.png`,
@@ -254,27 +267,48 @@ test.describe.parallel("Login Page Parallel Tests", () => {
     }
   });
 
-  test("login-page-10checkRedirect", async ({ page }, testInfo) => {
+  test("landing-page-9VerifyJavaScriptFileIncluded", async ({
+    page,
+  }, testInfo) => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     try {
-      await page.goto("http://localhost:3000/ProjectTSApp/TS1_Login.html");
+      await page.goto("http://localhost:3000/ProjectTSApp/index.html");
       await page.waitForLoadState("networkidle");
-      const uname = process.env.TS1_USERNAME;
-      const pass = process.env.TS1_PASSWORD;
-      await page.fill("#username", uname);
-      await page.fill("#password", pass);
-      const loginButton = page.locator("#loginBtn");
-      await loginButton.click();
 
-      await Promise.all([
-        page.waitForNavigation(), // waits for the redirect to index.html
-        page.click("#loginBtn"),
-      ]);
+      const scriptTag = page.locator("script[src='script.js']");
+      await expect(scriptTag).toHaveCount(1);
 
-      expect(page.url()).toContain("index.html");
-      const pageText = await page.locator("body").textContent();
-      expect(pageText).toContain("Bipi");
-      expect(pageText).toContain("Email: bipi@example.com");
+      await expect(scriptTag).toHaveAttribute("src", "script.js");
+
+      await page.screenshot({
+        path: `screenshots/TS1-${testInfo.title}-${timestamp}.png`,
+        fullPage: true,
+      }); //explicit screenshot
+    } catch (err) {
+      if (!page.isClosed()) {
+        await testInfo.attach(`TS1-${testInfo.title}-${timestamp}`, {
+          body: await page.screenshot({ fullPage: true }),
+          contentType: "image/png",
+        });
+      }
+      throw err; // rethrow so the test fails
+    }
+  });
+
+  test("landing-page-10ValidateBasicLayoutStructure", async ({
+    page,
+  }, testInfo) => {
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+    try {
+      await page.goto("http://localhost:3000/ProjectTSApp/index.html");
+      await page.waitForLoadState("networkidle");
+
+      const container = page.locator(".resume-container");
+      await expect(container).toBeVisible();
+
+      const sections = page.locator(".resume-container section");
+      const sectionCount = await sections.count();
+      expect(sectionCount).toBeGreaterThanOrEqual(4);
 
       await page.screenshot({
         path: `screenshots/TS1-${testInfo.title}-${timestamp}.png`,

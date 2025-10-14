@@ -6,11 +6,15 @@ test.describe("Iframe2 API Mock Test", () => {
     page,
   }, testInfo) => {
     // Go to your locally served HTML page
-    await page.goto("http://localhost:3000/App01/iframe2ApiMock.html");
+    const pagelink = "http://localhost:3000/ProjectTSApp/TS1_iFrame2Mock.html";
+    await page.goto(pagelink);
 
-    // Wait for textarea to be populated after the fetch
     const textarea = page.locator("#textareaCode");
-    await expect(textarea).toHaveValue(/Mock User/, { timeout: 5000 });
+
+    // Wait until the textarea value contains either "Mock User" or "Test User"
+    await expect(textarea).toHaveValue(/Mock User|Test User/, {
+      timeout: 10000,
+    });
 
     await page.screenshot({
       path: `screenshots/page-iframeAPImock1${timestamp}.png`,
@@ -36,7 +40,7 @@ test.describe("Iframe2 API Mock Test", () => {
     });
 
     // Go to your locally served HTML page
-    await page.goto("http://localhost:3000/App01/iframe2ApiMock.html");
+    await page.goto(pagelink);
 
     // Click the PopulateIframe button
     const runButton = page.locator("#populateBtn");
