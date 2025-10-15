@@ -1,0 +1,24 @@
+TS1-HTMLPlayground.spec.js
+
+This suite tests the "HTML Playground" feature, a local HTML editor with live preview in an iframe. It verifies input handling, live rendering, cross-browser/device behavior, and basic formatting support. The suite uses Playwright page automation and frame locators to simulate user interactions and validate iframe content.
+
+Coverage:
+
+1. "UI Availability": Confirms the textarea and Run button are visible and contain expected default values.
+2. "Default Content Verification": Ensures the textarea initially contains '<p>Hello Playwright!</p>'.
+3. "HTML Input Handling": Validates that user-entered HTML is accepted by the textarea.
+4. "Live Rendering in Iframe": Checks that clicking the Run button renders the updated HTML in the iframe.
+5. "Formatting Support": Verifies that HTML tags (e.g., '<b>', '<i>', '<p>') are correctly rendered.
+6. "Cross-Browser Verification": Confirms the feature works on Chromium, Firefox (desktop only for mobile viewports), and WebKit.
+7. "Cross-Device Verification": Tests functionality on Desktop, Mobile, and Pixel 5 viewport/device settings.
+8. "Visual Verification": Captures screenshots before and after running HTML code for traceability and validation.
+
+Techniques Demonstrated:
+
+* Page automation using Playwright ('page.goto', 'page.fill', 'page.click')
+* Frame handling via 'frameLocator' for live HTML content verification
+* Cross-browser and responsive/device testing
+* Screenshots for pre/post-render visual validation and error attachments
+* Reusable test function ('iframeTest') for DRY test design
+
+Purpose: Ensures the HTML Playground allows users to enter, edit, and preview HTML accurately, and works consistently across browsers and devices with proper rendering in an iframe.

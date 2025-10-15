@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
 
 async function iframeTest(page, testInfo, deviceTestInfo) {
   try {
-    const filePath = path.join(__dirname, "../ProjectTSApp/TS1_iFrame.html");
+    const filePath = path.join(__dirname, "../ProjectTSApp/TS1_HTMLPlayground.html"); 
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     console.log("device test started- ", `${deviceTestInfo} - ${timestamp}`);
 

@@ -1,0 +1,24 @@
+TS1-AddToList.spec.js
+
+This test suite verifies the functionality of the "Add to List" feature, ensuring that user input is validated, items are appended correctly, and UI behavior follows expected logic. It interacts with 'TS1_AddToList.html' and tests both "positive and negative scenarios" using Playwright.
+
+Coverage:
+
+1. "UI Availability": Confirms that the input field and “Add to List” button are visible and enabled.
+2. "Single Item Addition": Ensures entered text appears as a new list item.
+3. "Multiple Items Handling": Validates sequential additions and correct item count/order.
+4. "Input Validation": Displays an error when submitting an empty field.
+5. "Field Reset": Confirms the input field clears after successful add.
+6. "Message Visibility": Checks that the error message hides after valid input.
+7. "List Content Verification": Ensures list text matches user entries.
+8. "Focus Management": Verifies cursor returns to input field post-add.
+9. "Duplicate Handling": Confirms duplicates are allowed and displayed distinctly.
+
+Techniques Demonstrated:
+
+* Parallelized test execution ('test.describe.parallel')
+* Form interaction ('fill', 'click', 'inputValue', 'evaluate')
+* Conditional assertions and dynamic DOM validation
+* Sequential user input simulation and list verification
+* UI state testing (error message visibility, focus behavior)
+* Screenshot capture and error attachment with timestamps

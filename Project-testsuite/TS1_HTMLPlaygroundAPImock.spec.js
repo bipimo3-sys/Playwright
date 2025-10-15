@@ -6,7 +6,7 @@ test.describe("Iframe2 API Mock Test", () => {
     page,
   }, testInfo) => {
     // Go to your locally served HTML page
-    const pagelink = "http://localhost:3000/ProjectTSApp/TS1_iFrame2Mock.html";
+    const pagelink = "http://localhost:3000/ProjectTSApp/TS1_HTMLPlaygroundAPImock.html";
     await page.goto(pagelink);
 
     const textarea = page.locator("#textareaCode");

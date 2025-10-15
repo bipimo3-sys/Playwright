@@ -1,0 +1,27 @@
+TS1-APIendpoints.spec.js
+
+This suite tests the "API endpoints" of the 'AddToList' backend, verifying correct responses, data structure, error handling, and network behavior. It uses Playwright’s 'request' fixture for direct HTTP calls, covering both "CRUD operations" and edge cases.
+
+Coverage:
+
+1. "GET /api/users": Checks response status '200', verifies JSON structure with 'users' array and correct properties ('id', 'name').
+2. "GET /api/users/:id (valid ID)": Ensures retrieval of a specific user with correct 'id' and 'name'.
+3. "GET /api/users/:id (invalid ID)": Expects '404' and 'error: "User not found"'.
+4. "POST /api/users (valid)": Creates a new user, expects '201 Created', verifies returned 'id' and 'name'.
+5. "POST /api/users (missing name)": Expects '400' with 'error: "Name is required"'.
+6. "PUT /api/users/:id (existing user)": Updates an existing user and verifies updated data.
+7. "PUT /api/users/:id (non-existent user)": Expects '404' with 'error: "User not found"'.
+8. "DELETE /api/users/:id": Creates a temporary user, deletes it, verifies correct 'id' in response.
+9. "GET /api/delay": Tests delayed response, verifies 'status: "Delayed response"' and response time between ~2 seconds.
+10. "GET /api/error": Simulates a server error, expects '500 Internal Server Error' and 'error: "Internal server error"'.
+
+Techniques Demonstrated:
+
+* HTTP request handling with 'request.get', 'request.post', 'request.put', 'request.delete'
+* Response status verification and JSON structure assertions
+* Positive and negative scenarios including validation errors
+* Latency/delay handling for performance testing
+* Error endpoint handling (500 response)
+* Logging timestamps for traceability
+
+Purpose: Ensures the backend API behaves as expected, supports CRUD operations correctly, handles invalid input, and responds predictably to delays or server errors.
