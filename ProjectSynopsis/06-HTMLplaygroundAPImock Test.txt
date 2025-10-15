@@ -1,4 +1,4 @@
-TS1-Iframe2APIMock.spec.js
+TS1-HTMLPlaygroundAPImock.spec.js
 
 This suite tests the "Iframe API Data Loader" feature, a local HTML page that fetches user data from an API and populates an iframe. It verifies that API data is correctly retrieved, displayed in a textarea, and rendered inside the iframe, including mock responses and UI updates.
 

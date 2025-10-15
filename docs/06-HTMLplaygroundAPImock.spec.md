@@ -1,0 +1,26 @@
+# TS1-HTMLPlaygroundAPImock.spec.js
+
+This suite tests the **"Iframe API Data Loader"** feature, a local HTML page that fetches user data from an API and populates an iframe.  
+It verifies that API data is correctly retrieved, displayed in a textarea, and rendered inside the iframe, including mock responses and UI updates.
+
+## Coverage
+
+1. **API Data Fetching**: Confirms that the textarea loads user data from `/api/users` on page load.  
+2. **Textarea Value Verification**: Validates that the textarea contains expected user entries such as "Mock User" or "Test User".  
+3. **Iframe Population**: Checks that clicking the PopulateIframe button writes the textarea content into the iframe.  
+4. **Mock API Interception**: Demonstrates route interception to supply mock user data (`Test User 1`, `Test User 2`) for testing without relying on a live backend.  
+5. **Iframe Content Verification**: Ensures the iframe body contains the expected user names from the API response.  
+6. **Reload Handling**: Confirms the page reload does not break the API load and iframe population logic.  
+7. **Visual Verification**: Captures screenshots before and after populating the iframe for traceability and CI reporting.  
+
+## Techniques Demonstrated
+
+* Page automation with Playwright (`page.goto`, `page.locator`, `page.click`)  
+* Frame handling via `frameLocator` for verifying live content  
+* Mocking API responses using `page.route` and `route.fulfill`  
+* Assertions on dynamic UI updates (textarea value and iframe content)  
+* Screenshots for pre/post-action validation and CI attachments  
+
+## Purpose
+
+Ensures the HTML page correctly fetches and displays API data, supports testing with mock data, and renders the content in an iframe consistently across reloads and interactions.
