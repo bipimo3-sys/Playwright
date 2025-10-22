@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "gitpush": "git add . && git commit -m \"committed\" && git push origin main",
-    "postinstall": "npx playwright install --with-deps",
+    "postinstall": "npx playwright install",
     "start-server": "node server.js",
     "al-g": "allure generate allure-results --clean -o allure-report",
     "al-o": "allure open allure-report"
