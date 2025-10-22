@@ -1,0 +1,239 @@
+Started by user admin
+
+Checking out git https://github.com/bipimo3-sys/Playwright.git into /home/bipi/dev/jenkins_local/jenkins_home/workspace/Playwright-CI-CD@script/35c5c1e8975048dd902c9fa1bb8dcab922a15f4d1d0a06c445bd55a8d06e6fd5 to read Jenkinsfile
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /home/bipi/dev/jenkins_local/jenkins_home/workspace/Playwright-CI-CD@script/35c5c1e8975048dd902c9fa1bb8dcab922a15f4d1d0a06c445bd55a8d06e6fd5/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/bipimo3-sys/Playwright.git # timeout=10
+Fetching upstream changes from https://github.com/bipimo3-sys/Playwright.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > git fetch --tags --force --progress -- https://github.com/bipimo3-sys/Playwright.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision e53d2c891982b0243951b3d1a0a02c9a953b189c (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f e53d2c891982b0243951b3d1a0a02c9a953b189c # timeout=10
+Commit message: "committed"
+ > git rev-list --no-walk 45b29ff940d5b22a28c0f1b4cf5eff9cb13d86b5 # timeout=10
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins
+ in /home/bipi/dev/jenkins_local/jenkins_home/workspace/Playwright-CI-CD
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /home/bipi/dev/jenkins_local/jenkins_home/workspace/Playwright-CI-CD/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/bipimo3-sys/Playwright.git # timeout=10
+Fetching upstream changes from https://github.com/bipimo3-sys/Playwright.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > git fetch --tags --force --progress -- https://github.com/bipimo3-sys/Playwright.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision e53d2c891982b0243951b3d1a0a02c9a953b189c (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f e53d2c891982b0243951b3d1a0a02c9a953b189c # timeout=10
+Commit message: "committed"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+
+[Pipeline] stage
+[Pipeline] { (Declarative: Tool Install)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout code)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] echo
+15:53:46  Checking out repo...
+[Pipeline] checkout
+15:53:46  The recommended git tool is: NONE
+15:53:46  No credentials specified
+
+15:53:46   > git rev-parse --resolve-git-dir /home/bipi/dev/jenkins_local/jenkins_home/workspace/Playwright-CI-CD/.git # timeout=10
+15:53:46  Fetching changes from the remote Git repository
+15:53:46   > git config remote.origin.url https://github.com/bipimo3-sys/Playwright.git # timeout=10
+15:53:46  Fetching upstream changes from https://github.com/bipimo3-sys/Playwright.git
+15:53:46   > git --version # timeout=10
+15:53:46   > git --version # 'git version 2.43.0'
+15:53:46   > git fetch --tags --force --progress -- https://github.com/bipimo3-sys/Playwright.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+15:53:47   > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+15:53:47  Checking out Revision e53d2c891982b0243951b3d1a0a02c9a953b189c (refs/remotes/origin/main)
+15:53:47   > git config core.sparsecheckout # timeout=10
+15:53:47   > git checkout -f e53d2c891982b0243951b3d1a0a02c9a953b189c # timeout=10
+15:53:47  Commit message: "committed"
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Verify NodeJS Environment)
+
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
+15:53:48  + which node
+15:53:48  /home/bipi/dev/jenkins_local/jenkins_home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node22/bin/node
+[Pipeline] sh
+15:53:48  + node -v
+15:53:48  v22.21.0
+[Pipeline] sh
+
+15:53:49  + npm -v
+15:53:49  10.9.4
+[Pipeline] sh
+15:53:49  + which git
+15:53:49  /usr/bin/git
+[Pipeline] sh
+15:53:49  + git --version
+15:53:49  git version 2.43.0
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install dependencies)
+[Pipeline] tool
+
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] echo
+15:53:50  Installing dependencies...
+[Pipeline] sh
+15:53:50  + npm ci
+
+15:53:51  
+15:53:51  > playwright@1.0.0 postinstall
+15:53:51  > npx playwright install
+15:53:51  
+
+15:53:52  BEWARE: your OS is not officially supported by Playwright; downloading fallback build for ubuntu24.04-x64.
+15:53:52  BEWARE: your OS is not officially supported by Playwright; downloading fallback build for ubuntu24.04-x64.
+15:53:52  BEWARE: your OS is not officially supported by Playwright; downloading fallback build for ubuntu24.04-x64.
+15:53:52  BEWARE: your OS is not officially supported by Playwright; downloading fallback build for ubuntu24.04-x64.
+15:53:52  BEWARE: your OS is not officially supported by Playwright; downloading fallback build for ubuntu24.04-x64.
+15:53:52  
+15:53:52  added 81 packages, and audited 82 packages in 2s
+15:53:52  
+15:53:52  17 packages are looking for funding
+15:53:52    run `npm fund` for details
+15:53:52  
+15:53:52  found 0 vulnerabilities
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install Playwright Browsers)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] echo
+15:53:53  Installing Playwright Browsers...
+[Pipeline] sh
+15:53:53  + npx playwright install
+
+15:53:55  BEWARE: your OS is not officially supported by Playwright; downloading fallback build for ubuntu24.04-x64.
+15:53:55  BEWARE: your OS is not officially supported by Playwright; downloading fallback build for ubuntu24.04-x64.
+15:53:55  BEWARE: your OS is not officially supported by Playwright; downloading fallback build for ubuntu24.04-x64.
+15:53:55  BEWARE: your OS is not officially supported by Playwright; downloading fallback build for ubuntu24.04-x64.
+15:53:55  BEWARE: your OS is not officially supported by Playwright; downloading fallback build for ubuntu24.04-x64.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run All Tests (CI))
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+15:53:55  Masking supported pattern matches of $TS1_USERNAME or $TS1_PASSWORD
+[Pipeline] {
+[Pipeline] echo
+15:53:55  Running Playwright test suites...
+[Pipeline] sh
+
+15:53:56  + npx playwright test --reporter=html
+
+15:53:59  
+15:53:59  Running 49 tests using 1 worker
+
+15:54:13  ··········TS1-api-endpoint-1GETallUsers-VerifyCorrectJSONstructure-[2025-10-22T10-24-13-105Z] - success
+15:54:13  ·TS1-api-endpoint-2GETuserByID-successScenario-[2025-10-22T10-24-13-194Z] - success
+15:54:13  ·TS1-api-endpoint-3GETuserByInvalidID-expect404-[2025-10-22T10-24-13-236Z] - success
+15:54:13  ·TS1-api-endpoint-4POSTnewUser-successScenario-[2025-10-22T10-24-13-273Z] - success
+15:54:13  ·TS1-api-endpoint-5POSTwithoutName-expect404-[2025-10-22T10-24-13-319Z] - success
+15:54:13  ·TS1-api-endpoint-6PUTupdateExistingUser-verifyUpdatedData-[2025-10-22T10-24-13-347Z] - success
+15:54:13  ·TS1-api-endpoint-7PUTupdateNon-existingUser-expect404-[2025-10-22T10-24-13-379Z] - success
+15:54:13  ·TS1-api-endpoint-8DELETEuser-verifyDeletion-[2025-10-22T10-24-13-411Z] - success
+
+15:54:15  ·TS1-api-endpoint-9GETdelayedEndpoint-testNetworkLatency-[2025-10-22T10-24-13-453Z] - success
+
+15:54:15  ·TS1-api-endpoint-10GETerrorEndpoint-verify500responseHandling-[2025-10-22T10-24-15-525Z] - success
+15:54:15  ·device test started-  Desktop test in chromium - 2025-10-22T10-24-15-764Z
+15:54:16  ·device test started-  Mobile test in chromium - 2025-10-22T10-24-16-398Z
+
+15:54:17  ·device test started-  Pixel 5 test in chromium - 2025-10-22T10-24-16-997Z
+
+15:54:22  ·device test started-  Desktop test in firefox - 2025-10-22T10-24-21-687Z
+
+15:54:26  ·device test started-  Mobile test in firefox - 2025-10-22T10-24-26-065Z
+
+15:54:29  ·device test started-  Desktop test in webkit - 2025-10-22T10-24-29-596Z
+
+15:54:30  ·device test started-  Mobile test in webkit - 2025-10-22T10-24-30-646Z
+
+15:54:31  ·device test started-  Pixel 5 test in webkit - 2025-10-22T10-24-31-498Z
+
+15:54:53  ······················
+15:54:53    49 passed (54.5s)
+[Pipeline] }
+[Pipeline] // withCredentials
+Post stage
+[Pipeline] echo
+15:54:53  Generating HTML report...
+[Pipeline] publishHTML
+15:54:53  [htmlpublisher] Archiving HTML reports...
+15:54:53  [htmlpublisher] Archiving at BUILD level /home/bipi/dev/jenkins_local/jenkins_home/workspace/Playwright-CI-CD/playwright-report to Playwright_20Test_20Report
+15:54:53  [htmlpublisher] Copying recursive using current thread
+[Pipeline] }
+
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
