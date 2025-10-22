@@ -1,78 +1,77 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'Node25'
+    environment {
+        PATH = "/usr/bin:${env.PATH}"   // Use system binaries first
+        NODE_ENV = "ci"
     }
 
     options {
         timestamps()
-        //ansiColor('xterm')
+        ansiColor('xterm')
     }
 
     stages {
-        // CI stage
+
         stage('Checkout code') {
             steps {
-                ansiColor('xterm'){
-                    echo 'Checking out repo...'
-                    checkout scm
-                }
+                echo 'Checking out repo...'
+                checkout scm
+            }
+        }
+
+        stage('Verify System Tools') {
+            steps {
+                sh 'which node'
+                sh 'node -v'
+                sh 'npm -v'
+                sh 'which git'
+                sh 'git --version'
             }
         }
 
         stage('Install dependencies') {
             steps {
-                ansiColor('xterm'){
-                    echo 'Installing depedencies...'
-                    bat 'npm ci'
-                }
+                echo 'Installing dependencies...'
+                sh 'npm ci || npm install'
             }
         }
 
         stage('Install Playwright Browsers') {
             steps {
-                ansiColor('xterm'){
-                    echo 'Installing Playwright Browsers...'
-                    bat 'npx playwright install --with-deps'
-                }
+                echo 'Installing Playwright Browsers...'
+                sh 'npx playwright install --with-deps'
             }
         }
 
-        stage('Run All test (CI)') {
+        stage('Run All Tests (CI)') {
             steps {
-                // Wrap multiple credentials
+                // 🔒 Use Jenkins credentials securely
                 withCredentials([
-                    string(credentialsId: 'GOOGLE_EMAIL', variable: 'bipi6067@gmail.com'),
-                    string(credentialsId: 'GOOGLE_PASSWORD', variable: 'bipi6067bipi6067'),
-                    string(credentialsId: 'W3S_LOGINEMAIL', variable: 'bipi6067@gmail.com'),
-                    string(credentialsId: 'W3S_PASSWORD', variable: 'Bipi6067@Bipi6067'),
-                    string(credentialsId: 'TS1_USERNAME', variable: 'admin'),
-                    string(credentialsId: 'TS1_PASSWORD', variable: 'password')
+                    string(credentialsId: 'GOOGLE_EMAIL', variable: 'GOOGLE_EMAIL'),
+                    string(credentialsId: 'GOOGLE_PASSWORD', variable: 'GOOGLE_PASSWORD'),
+                    string(credentialsId: 'W3S_LOGINEMAIL', variable: 'W3S_LOGINEMAIL'),
+                    string(credentialsId: 'W3S_PASSWORD', variable: 'W3S_PASSWORD'),
+                    string(credentialsId: 'TS1_USERNAME', variable: 'TS1_USERNAME'),
+                    string(credentialsId: 'TS1_PASSWORD', variable: 'TS1_PASSWORD')
                 ]) {
-                    ansiColor('xterm') {
-                        echo 'Running Playwright test suites...'
-                        bat 'npx playwright test --reporter=html'
-                    }
+                    echo 'Running Playwright test suites...'
+                    sh 'npx playwright test --reporter=html'
                 }
             }
             post {
                 always {
-                    ansiColor('xterm'){
-                        echo 'Generating HTML report'
-                        publishHTML(target: [
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: true,
-                            keepAll: true,
-                            reportDir: 'playwright-report',
-                            reportFiles: 'index.html',
-                            reportName: 'Playwright Test Report'
-                        ])
-                    }
+                    echo 'Generating HTML report...'
+                    publishHTML(target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'playwright-report',
+                        reportFiles: 'index.html',
+                        reportName: 'Playwright Test Report'
+                    ])
                 }
             }
         }
-
-        // CD stage
     }
 }
