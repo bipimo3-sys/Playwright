@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         // Use Jenkins-managed NodeJS installation
-        nodejs 'Node24'
+        nodejs 'Node22'
     }
 
     environment {
