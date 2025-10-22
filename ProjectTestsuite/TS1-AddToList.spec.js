@@ -7,11 +7,14 @@ test.describe.parallel("AddToList Page Parallel Tests", () => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     try {
       await page.goto("http://localhost:3000/ProjectTSApp/TS1_AddToList.html");
+      //await page.goto("http://localhost:3000/ProjectTSApp/TS1_AddToList.html1");
       await page.waitForLoadState("networkidle");
 
       const inputField = page.locator("#itemInput");
       await expect(inputField).toBeVisible();
       await expect(inputField).toBeEnabled();
+
+      //await page.pause();
 
       await page.screenshot({
         path: `screenshots/TS1-${testInfo.title}-${timestamp}.png`,
