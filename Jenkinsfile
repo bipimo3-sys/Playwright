@@ -1,14 +1,18 @@
 pipeline {
     agent any
 
+    tools {
+        // Use Jenkins-managed NodeJS installation
+        nodejs 'Node22'
+    }
+
     environment {
-        PATH = "/usr/bin:${env.PATH}"   // Use system binaries first
         NODE_ENV = "ci"
     }
 
     options {
         timestamps()
-        //ansiColor('xterm')
+        // ansiColor('xterm')
     }
 
     stages {
@@ -20,7 +24,7 @@ pipeline {
             }
         }
 
-        stage('Verify System Tools') {
+        stage('Verify NodeJS Environment') {
             steps {
                 sh 'which node'
                 sh 'node -v'
@@ -40,13 +44,13 @@ pipeline {
         stage('Install Playwright Browsers') {
             steps {
                 echo 'Installing Playwright Browsers...'
-                sh 'npx playwright install --with-deps'
+                // ⚠️ Safe version: avoids system package installs
+                sh 'npx playwright install'
             }
         }
 
         stage('Run All Tests (CI)') {
             steps {
-                // 🔒 Use Jenkins credentials securely
                 withCredentials([
                     string(credentialsId: 'GOOGLE_EMAIL', variable: 'GOOGLE_EMAIL'),
                     string(credentialsId: 'GOOGLE_PASSWORD', variable: 'GOOGLE_PASSWORD'),
