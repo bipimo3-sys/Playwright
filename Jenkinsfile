@@ -52,10 +52,10 @@ pipeline {
         stage('Run All Tests (CI)') {
             steps {
                 withCredentials([
-                    string(credentialsId: 'GOOGLE_EMAIL', variable: 'GOOGLE_EMAIL'),
+/*                     string(credentialsId: 'GOOGLE_EMAIL', variable: 'GOOGLE_EMAIL'),
                     string(credentialsId: 'GOOGLE_PASSWORD', variable: 'GOOGLE_PASSWORD'),
                     string(credentialsId: 'W3S_LOGINEMAIL', variable: 'W3S_LOGINEMAIL'),
-                    string(credentialsId: 'W3S_PASSWORD', variable: 'W3S_PASSWORD'),
+                    string(credentialsId: 'W3S_PASSWORD', variable: 'W3S_PASSWORD'), */
                     string(credentialsId: 'TS1_USERNAME', variable: 'TS1_USERNAME'),
                     string(credentialsId: 'TS1_PASSWORD', variable: 'TS1_PASSWORD')
                 ]) {
