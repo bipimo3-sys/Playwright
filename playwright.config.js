@@ -17,7 +17,7 @@ export default defineConfig({
   projects: [
     {
       name: "TS2 - POM and customFixtures",
-      testDir: "./tests",
+      testDir: "./testsWithPomAndCusFixtures",
     },
     {
       name: "TS1 - Test Suite",
