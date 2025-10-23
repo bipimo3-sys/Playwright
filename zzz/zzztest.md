@@ -1,5 +1,0 @@
-### CHECK
-XXXX
-
-### OBJECTIVE
-XXXX
