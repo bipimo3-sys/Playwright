@@ -1,3 +1,4 @@
+//this pipeline is tested to work on Ubuntu24, and will not work on Windows
 pipeline {
     agent any
 
@@ -52,7 +53,7 @@ pipeline {
         stage('Run All Tests (CI)') {
             steps {
                 withCredentials([
-/*                     string(credentialsId: 'GOOGLE_EMAIL', variable: 'GOOGLE_EMAIL'),
+/*                  string(credentialsId: 'GOOGLE_EMAIL', variable: 'GOOGLE_EMAIL'),
                     string(credentialsId: 'GOOGLE_PASSWORD', variable: 'GOOGLE_PASSWORD'),
                     string(credentialsId: 'W3S_LOGINEMAIL', variable: 'W3S_LOGINEMAIL'),
                     string(credentialsId: 'W3S_PASSWORD', variable: 'W3S_PASSWORD'), */

@@ -14,7 +14,17 @@ import { defineConfig, devices } from "@playwright/test";
  *
  */
 export default defineConfig({
-  testDir: "./ProjectTestsuite",
+  projects: [
+    {
+      name: "TS2 - POM and customFixtures",
+      testDir: "./tests",
+    },
+    {
+      name: "TS1 - Test Suite",
+      testDir: "./ProjectTestsuite",
+    },
+  ],
+
   /* testDir: "./Project-tests", */
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -38,7 +48,7 @@ export default defineConfig({
     viewport: { width: 1280, height: 800 },
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
-    video: "retain-on-failure"
+    video: "retain-on-failure",
   },
 
   /* Configure projects for major browsers */
