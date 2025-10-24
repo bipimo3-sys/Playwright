@@ -327,10 +327,6 @@ test.describe.parallel("Landing Page Parallel Tests", () => {
 });
 
 /*
-
-
-
-
     
     await loginButton.click();
 
