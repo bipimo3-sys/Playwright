@@ -14,14 +14,11 @@ import { defineConfig, devices } from "@playwright/test";
  *
  */
 export default defineConfig({
+  testDir: "./ProjectTestsuite1",
   projects: [
     {
-      name: "TS2 - POM and customFixtures",
-      testDir: "./ProjectTS2WithPomAndCusFixtures",
-    },
-    {
       name: "TS1 - Test Suite",
-      testDir: "./ProjectTestsuite",
+      testDir: "./ProjectTestsuite1",
     },
   ],
 
