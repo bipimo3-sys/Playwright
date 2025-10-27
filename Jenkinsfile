@@ -45,7 +45,7 @@ pipeline {
         stage('Install Playwright Browsers') {
             steps {
                 echo 'Installing Playwright Browsers...'
-                // ⚠️ Safe version: avoids system package installs
+                // Safe version: avoids system package installs
                 sh 'npx playwright install'
             }
         }
